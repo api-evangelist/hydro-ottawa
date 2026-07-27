@@ -1,0 +1,141 @@
+aid: hydro-ottawa
+url: https://raw.githubusercontent.com/api-evangelist/hydro-ottawa/refs/heads/main/apis.yml
+name: Hydro Ottawa
+kind: company
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Energy
+- Canada
+- Ontario
+- Utilities
+- Electricity
+- Electricity Distribution
+- Smart Metering
+- Green Button
+- ESPI
+- Municipal Utility
+- Renewables
+- Hydroelectric
+- Solar
+- Demand Response
+- Grid
+created: '2026-07-27'
+modified: '2026-07-27'
+specificationVersion: '0.19'
+description: >-
+  Hydro Ottawa Holding Inc. is a private corporation 100 percent owned by the City
+  of Ottawa, and the parent of Hydro Ottawa Limited — the regulated local
+  distribution company (LDC) that delivers electricity to roughly 372,000 customers
+  in Ottawa and Casselman, Ontario — alongside Portage Power (Ontario's largest
+  municipally-owned renewable generator, with run-of-river hydroelectric plants at
+  Chaudière Falls and elsewhere in Ontario, Quebec and New York plus solar
+  installations across Ottawa), Envari (energy solutions) and Hiboo Networks (fibre).
+  It sits at the wires-and-meter end of the Canadian value chain: it does not run the
+  market — that is IESO — and it is not a competitive retailer, it is the monopoly
+  distributor that owns the smart meter, the interval data and the billing
+  relationship. Its API posture exists because Ontario legislated it. Ontario
+  Regulation 633/21 (Energy Data) under the Electricity Act, 1998 compels roughly
+  sixty electricity and natural gas utilities in the province to implement Green
+  Button Download My Data and Green Button Connect My Data to the NAESB REQ.21 ESPI
+  v3.3 standard and to have those implementations certified by the Green Button
+  Alliance — a province-level, standard-specific consumer data mandate with no
+  Canadian national equivalent. Hydro Ottawa states on its own site that it offers
+  both services free of charge and that third parties must complete its onboarding
+  process and certify with the GBA. Two live surfaces back that up: a customer Green
+  Button authorization portal at https://hydroottawa.savagedata.com/Connect/Authorize
+  (HTTP 200) and an anonymously reachable third-party developer registration
+  application at https://ottawaonboarding.savagedata.com/ (HTTP 200), both operated by
+  the North Bay vendor Savage Data Systems. What could NOT be verified is the thing
+  the mandate actually requires: no ESPI base URI is published anywhere, the vendor
+  host is a catch-all Blazor SPA that returns HTTP 200 with identical HTML for every
+  path including invented ones, no OpenID Connect discovery document is served
+  anonymously, and no public Green Button Alliance certificate register listing Hydro
+  Ottawa by name could be found. The mandate is recorded here as claimed-and-plausibly-
+  operating, not as verified. Everything else is closed: hydroottawa.com returns 404
+  for /developers, /api, /docs, /data, /openapi.json and /swagger.json;
+  developers.hydroottawa.com does not resolve and developersdev.hydroottawa.com
+  answers HTTP 530 through Cloudflare; api.hydroottawa.com exists but returns 403 at
+  root and 404 on every path; the github.com/hydroottawa organization has existed
+  since 2015 with zero public repositories; and the City of Ottawa open data portal
+  carries 682 datasets, none of them Hydro Ottawa's. The one genuinely open,
+  anonymous, machine-readable feed carrying Hydro Ottawa data — live outage counts
+  under the KUBRA StormCenter instance behind outages.hydroottawa.com — is
+  undocumented vendor infrastructure that Hydro Ottawa does not publish as a product,
+  and it is deliberately not listed as an API here. Hydro Ottawa is therefore a
+  utility with a mandated consumer data API it does not document, and no open market
+  data at all.
+apis:
+- aid: hydro-ottawa:hydro-ottawa-green-button-connect-my-data-api
+  name: Hydro Ottawa Green Button Connect My Data (CMD) API
+  description: >-
+    Hydro Ottawa's mandated Green Button Connect My Data surface — the OAuth-authorized,
+    machine-to-machine channel through which a customer can grant a third-party
+    application ongoing access to their smart meter interval consumption and billing
+    data in NAESB REQ.21 ESPI XML. It exists because Ontario Regulation 633/21 (Energy
+    Data) under the Electricity Act, 1998 requires every covered Ontario electricity and
+    gas distributor to implement Green Button CMD and DMD to ESPI v3.3 and certify with
+    the Green Button Alliance. Hydro Ottawa's own Green Button page states the service is
+    free, that the customer selects the data types, duration and frequency and may revoke
+    at any time, that personally identifiable information is transmitted separately from
+    usage data, and that the authorization flow must be initiated from the third-party
+    application, which then redirects the customer into Hydro Ottawa's Green Button
+    authentication. The customer-facing half of that flow is live and was confirmed at
+    HTTP 200 on 2026-07-27 at https://hydroottawa.savagedata.com/Connect/Authorize, served
+    by Savage Data Systems on Microsoft-IIS. No base URL is recorded here because Hydro
+    Ottawa publishes no ESPI base URI, no API reference, no OpenID Connect discovery
+    document and no first-party specification — a developer receives connection details
+    only after completing onboarding. To integrate you must complete Hydro Ottawa's
+    third-party onboarding at https://ottawaonboarding.savagedata.com/ and test and certify
+    your solution with the Green Button Alliance. Conformance could not be independently
+    verified from outside; see review.yml.
+  humanURL: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  tags:
+  - Green Button
+  - Connect My Data
+  - ESPI
+  - Energy Usage
+  - Smart Metering
+  - Consumer Data
+  - Ontario
+  - Canada
+  properties:
+  - type: OpenAPI
+    url: openapi/hydro-ottawa-green-button-espi-openapi.yml
+  - type: Documentation
+    url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  - type: Documentation
+    url: https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+  - type: Registration
+    url: https://ottawaonboarding.savagedata.com/
+  - type: Authentication
+    url: https://hydroottawa.savagedata.com/Connect/Authorize
+  - type: Certification
+    url: https://www.greenbuttonalliance.org/testing
+  - type: Documentation
+    url: https://www.canlii.org/en/on/laws/regu/o-reg-633-21/latest/o-reg-633-21.html
+  - type: Documentation
+    url: https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
+common:
+- type: Website
+  url: https://hydroottawa.com/
+- type: Website
+  url: https://hydroottawagroup.com/
+- type: Documentation
+  url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+- type: Registration
+  url: https://ottawaonboarding.savagedata.com/
+- type: Support
+  url: https://hydroottawa.com/en/faq
+- type: StatusPage
+  url: https://outages.hydroottawa.com/
+- type: GitHubOrganization
+  url: https://github.com/hydroottawa
+- type: LinkedIn
+  url: https://www.linkedin.com/company/hydro-ottawa
+- type: Bluesky
+  url: https://bsky.app/profile/hydroottawa.bsky.social
+- type: YouTube
+  url: https://www.youtube.com/user/hydroottawalimited/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

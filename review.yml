@@ -1,0 +1,560 @@
+aid: hydro-ottawa
+name: Hydro Ottawa
+review:
+  question: >-
+    Ontario mandated Green Button by regulation. Does Hydro Ottawa's Green Button
+    obligation resolve into a verifiable implementation, and can a developer outside
+    the utility prove it?
+  answer: >-
+    Partly, and the gap is the finding. Hydro Ottawa operates two live, anonymously
+    reachable Green Button surfaces — a customer authorization portal and a
+    third-party developer registration application — which is materially more than a
+    press release. But the artefact the regulation actually requires, a conformant
+    ESPI resource API, could not be verified from outside: no base URI is published,
+    no API reference exists, no OIDC discovery document is served, the vendor host is
+    a catch-all SPA that returns HTTP 200 for every path including invented ones, and
+    no public Green Button Alliance certificate register naming Hydro Ottawa could be
+    located. Recorded as live-claimed-unverified, deliberately, not live-implemented.
+  date: '2026-07-27'
+  reviewer: API Evangelist
+  homeMarket: Canada
+  tier: utility-retailer
+  organizationNote: >-
+    Strictly, Hydro Ottawa Limited is a regulated local distribution company (a wires
+    utility), not a competitive retailer. In Ontario the LDC is the party the consumer
+    data mandate binds, because the LDC owns the smart meter, the interval data and
+    the billing relationship. The utility-retailer tier is applied on that basis.
+
+mandate:
+  regime: green-button-ontario
+  regimeName: >-
+    Ontario Regulation 633/21 (Energy Data), made under the Electricity Act, 1998
+    (s. 25.35.8). Requires covered Ontario electricity and natural gas distributors —
+    roughly sixty utilities, with exemptions for small entities lacking smart metering
+    infrastructure — to implement Green Button Download My Data (DMD) and Green Button
+    Connect My Data (CMD) conforming to the North American Energy Standards Board
+    Retail Energy Quadrant Book 21 (NAESB REQ.21) Energy Services Provider Interface
+    (ESPI) Model Business Practices version 3.3 (published 30 January 2020), and to
+    have those implementations certified by the Green Button Alliance, by 1 November
+    2023. Usage information must be at intervals of one hour or less and at least 24
+    months must be made available. Regulator/administrator: Ontario Energy Board.
+    Standards body: NAESB. Certifier: Green Button Alliance.
+  status: live-claimed-unverified
+  designated: true
+  designationDetail: >-
+    Hydro Ottawa Limited is a licensed Ontario electricity distributor with full smart
+    metering deployment and roughly 372,000 customers, so it falls squarely inside the
+    covered class under O. Reg. 633/21 and none of the small-entity exemptions apply.
+    The Green Button Alliance announced on 2 November 2023 that it had tested and
+    certified 55 Ontario utility platforms to ESPI v3.3 against the regulation's
+    deadline. That announcement is an aggregate count — it does not name individual
+    utilities, and Hydro Ottawa is not named in it.
+  whatWasVerified: >-
+    Three things, all by anonymous HTTP on 2026-07-27, all recorded with status below.
+    (1) Hydro Ottawa publishes its own Green Button service pages describing DMD and
+    CMD, both HTTP 200. (2) A live customer Green Button authorization portal exists at
+    https://hydroottawa.savagedata.com/Connect/Authorize, HTTP 200, Microsoft-IIS/10.0,
+    a Blazor Server application whose asset names are Ottawa-branded
+    (css/bootstrap/Ottawa_bootstrap.min.css, css/Ottawa_site.css) and whose bundle is
+    named LDCAuthGPFrontEnd — "LDC Auth Green Button front end". (3) A live third-party
+    developer registration application exists at https://ottawaonboarding.savagedata.com/,
+    HTTP 200, Microsoft-IIS/10.0, HTML title "3rdPartyRegistration", stylesheet
+    ThirdPartyRegistration.styles.css. Both are operated by Savage Data Systems of North
+    Bay, Ontario, a 1980-founded vendor that states it serves over 40 Local Distribution
+    Companies and retailers. An organization does not stand up and brand a dedicated
+    third-party Green Button registration application for a service it has not built.
+  whatCouldNotBeVerified: >-
+    The implementation itself, in the only sense that matters to an integrator.
+    (a) No ESPI base URI is published by Hydro Ottawa anywhere on its site, in its
+    Green Button pages, or in any public document found. (b) No API reference, no
+    endpoint list, no scope list and no first-party specification exists. (c) No
+    anonymously served OpenID Connect discovery document was found on any Hydro Ottawa
+    or Savage Data host. (d) Endpoint probing against the vendor host is impossible:
+    https://hydroottawa.savagedata.com/ is a catch-all Blazor Server SPA that returns
+    HTTP 200 with byte-identical HTML for /DataCustodian, /espi/1_1/resource/,
+    /oauth/authorize, /oauth/token, /api/v1, /.well-known/openid-configuration AND for
+    the deliberately invented control path /this-path-should-not-exist-12345. Every one
+    of those 200s is the SPA shell, not an endpoint, and none of them is treated here as
+    evidence of anything. (e) The Green Button Alliance publishes no public certified-
+    products register at a discoverable URL — /certified, /certifications,
+    /certified-products and /certified-utilities all return HTTP 404 — so Hydro Ottawa's
+    GBA certification could not be confirmed by name from a primary source.
+  claimVsImplementation: >-
+    Hydro Ottawa's own statement — "Third-party providers who want to integrate with
+    Hydro Ottawa's Green Button services must complete the onboarding process [and]
+    test and certify their solution with the Green Button Alliance (GBA)" — is a claim.
+    The two live Blazor applications are operational evidence and rank well above a
+    claim. A conformant ESPI response is proof, and no such response was obtained,
+    because Hydro Ottawa publishes nothing that would let an outsider request one.
+    Contrast the Australian CDR sibling profiles in this network, where designation is
+    provable from the ACCC CDR Register in one anonymous call and conformance is provable
+    from unauthenticated /cds-au/v1/discovery/status. Ontario built the mandate without
+    building the register, the public discovery endpoint or the published base URI, so
+    Ontario's mandate is structurally unverifiable from outside the utility. The mandate
+    replicated; the accountability surface did not.
+
+dataStandard:
+  name: NAESB REQ.21 Energy Services Provider Interface (ESPI) v3.3 — Green Button
+  mandatedVersion: '3.3'
+  mandatedBy: Ontario Regulation 633/21 (Energy Data), Electricity Act, 1998
+  implementedVersionVerified: false
+  implementedVersionNote: >-
+    Hydro Ottawa states its data is in "machine-readable XML format" and names Green
+    Button and the Green Button Alliance, but never names an ESPI version on any page
+    read. v3.3 is the version the regulation compels; it is recorded as the mandated
+    version, not as an observed one. Public reporting indicates the Savage Data Systems
+    "SDS Green Engine" Data Custodian product is compliant with the NAESB 3.3 standard;
+    that is a vendor/press claim, not something verified here.
+  documents:
+  - title: Green Button API Documentation (ESPI 4.0)
+    format: OpenAPI 3.0.0
+    paths: 7
+    saved: openapi/hydro-ottawa-green-button-espi-openapi.yml
+    sourceURL: https://raw.githubusercontent.com/GreenButtonAlliance/OpenAPI-Green-Button-Documentation/main/green-button-openapi.yaml
+    sourceRepository: https://github.com/GreenButtonAlliance/OpenAPI-Green-Button-Documentation
+    httpStatus: 200
+    fetched: '2026-07-27'
+    bytes: 20333
+    parses: true
+    servers:
+    - https://sandbox.greenbuttonalliance.org:8443/DataCustodian
+    pathsList:
+    - /espi/1_1/resource/ApplicationInformation
+    - /espi/1_1/resource/ApplicationInformation/{applicationInformationId}
+    - /espi/1_1/resource/Authorization
+    - /espi/1_1/resource/Authorization/{authorizationId}
+    - /espi/1_1/resource/Batch/Bulk/{bulkId}
+    - /espi/1_1/resource/UsagePoint
+    - /espi/1_1/resource/UsagePoint/{usagePointId}
+    securitySchemes: >-
+      A single oauth2 scheme with authorizationCode and clientCredentials flows,
+      authorizationUrl https://sandbox.greenbuttonalliance.org:8443/oauth/authorize and
+      tokenUrl https://sandbox.greenbuttonalliance.org:8443/oauth/token. The scopes
+      object is empty in the source document — no scope names were invented here.
+    provenanceNote: >-
+      This document is NOT Hydro Ottawa's. It is authored and published by the Green
+      Button Alliance and was harvested verbatim; only an x-provenance / x-source-url /
+      x-source-repository / x-harvested block was added under info. Two caveats are
+      recorded on the artifact itself and repeated here: it describes ESPI 4.0 while
+      Ontario mandates ESPI 3.3, and its servers[] point at the GBA's own sandbox, not
+      at any Hydro Ottawa host. It is included because it is the only real, parseable,
+      machine-readable contract in the Green Button ecosystem and it is the family the
+      Hydro Ottawa CMD API belongs to — not because Hydro Ottawa serves it.
+  otherStandardsFound: >-
+    None. No CDR Consumer Data Standards (Canada has no consumer data right in energy),
+    no OpenADR, no IEEE 2030.5, no IEC CIM 61968/61970, no OCPP or OCPI reference was
+    found on any Hydro Ottawa surface. hydroottawa.com/en/ev-charging,
+    /en/electric-vehicle and /en/demand-response all return HTTP 404. The FlexSaver
+    demand-flexibility programme at https://gridflex.hydroottawa.com/ (HTTP 200) is a
+    consumer sign-up page with no protocol or API reference.
+
+consumerVsMarketData:
+  consumerDataAPI: true
+  consumerDataDetail: >-
+    Yes — a third party can obtain an individual Hydro Ottawa customer's smart meter
+    interval consumption and billing data through Green Button Connect My Data, because
+    O. Reg. 633/21 compels it. Hydro Ottawa's own pages describe the mechanics: the
+    authorization must be initiated inside the third-party application, which redirects
+    the customer into Hydro Ottawa's Green Button authentication; the customer chooses
+    the data types, the duration and the frequency and can revoke at any time from
+    account settings; personally identifiable information is transmitted separately from
+    usage data; the service is free of charge. Data covers electricity consumption from
+    the smart meter at the meter's own interval (15-minute, hourly or daily) plus billing
+    data — payments, generation and distribution charges, demand charges, third-party
+    charges — for up to 24 months, with an offline form for older data. Marked true on the
+    strength of the mandate plus two live operating surfaces. It is emphatically not
+    marked verified: no base URI, no endpoint, no scope and no conformant response was
+    obtained, and none was invented.
+  downloadMyData:
+    exists: true
+    detail: >-
+      Green Button Download My Data is live and separately documented: up to 24 months of
+      usage and billing data as Green Button XML (also Excel and PDF) from the Green Button
+      portal or MyAccount. It is behind a customer login — MyAccount credentials, or the
+      20-digit account number plus total kWh consumption plus bill due date from a recent
+      bill. Deliberately NOT listed in apis.yml apis[]: it is a documented data service and
+      a real ESPI-format export, but it is a portal file download behind a customer
+      credential, not a programmatic API, and Hydro Ottawa publishes no endpoint for it.
+      Requests beyond 24 months go through a human form at
+      https://hydroottawa.com/en/accounts-services/services/request-additional-electricity-meter-data.
+  marketDataOpen: false
+  marketDataDetail: >-
+    No. Hydro Ottawa publishes no open grid, market, system or asset data as a product.
+    There is no open-data portal, no dataset licence, no feed catalogue and no download
+    page. In Ontario the open market layer belongs to the IESO, the independent system
+    operator, not to the distributor — a distributor in this market has no market data to
+    publish. The City of Ottawa's own open data portal was checked directly: its DCAT feed
+    at https://open.ottawa.ca/api/feed/dcat-us/1.1.json returned HTTP 200 with 682 datasets
+    and exactly one string match on "hydro", a City greenhouse gas emissions dashboard —
+    the municipally-owned utility contributes nothing to its owner's open data portal.
+    Notably, Hydro Ottawa also publishes nothing about Portage Power's 131 MW of renewable
+    generation: no output feed, no emissions feed, no generation data.
+  undocumentedOpenFeed:
+    finding: >-
+      One genuinely open, anonymous, machine-readable feed carrying Hydro Ottawa data does
+      exist, and it is not Hydro Ottawa's to give. https://outages.hydroottawa.com/ is a
+      KUBRA StormCenter deployment (product 5.52.0) whose bootstrap config exposes
+      instanceId 75aa35eb-53c1-42e0-b705-d8abcf71334a and viewId
+      671ab4e4-6e66-453f-9179-040b44c3f155 in page source. Those identifiers resolve to a
+      live public JSON API on kubra.io that answers without a key, a header or a referer.
+      It is undocumented vendor infrastructure with no publisher, no terms, no licence, no
+      version guarantee and no stability commitment. It is recorded here as a probe result
+      and is deliberately excluded from apis.yml apis[], which carries only real,
+      documented APIs. It is also the reason market_data_open is recorded as false rather
+      than true: a feed an application happens to leave reachable is not a utility
+      publishing open data.
+    verified:
+    - url: https://outages.hydroottawa.com/
+      httpStatus: 200
+      note: HTML title "Hydro Ottawa Outage Map"; KUBRA StormCenter bootstrap config inline in page source.
+    - url: https://kubra.io/stormcenter/api/v1/stormcenters/75aa35eb-53c1-42e0-b705-d8abcf71334a/views/671ab4e4-6e66-453f-9179-040b44c3f155/currentState?preview=false
+      httpStatus: 200
+      contentType: application/json
+      auth: none — fully anonymous
+      note: >-
+        Returned tileFormat QUADKEY_JSON, stormcenterDeploymentId
+        fa5c4be8-143c-42fb-8ed2-de34b28e0dea, updatedAt 1785154770000, and a data block
+        whose interval_generation_data pointer was data/bf99fc84-ce72-42d6-9d69-fab09af3c149.
+    - url: https://kubra.io/data/bf99fc84-ce72-42d6-9d69-fab09af3c149/public/summary-1/data.json
+      httpStatus: 200
+      contentType: application/json
+      auth: none — fully anonymous
+      note: >-
+        Live system summary at 2026-07-27T12:19:30Z — total_cust_a 18 customers affected,
+        total_outages 5, total_cust_s 379,291 customers served, total_percent_cust_active
+        99.99, page_mode BLUESKY.
+
+accessGate:
+  gate: application-approval
+  gated: true
+  whatADeveloperMustDo: >-
+    Exactly two steps, both stated by Hydro Ottawa and neither of them self-serve.
+    First, complete Hydro Ottawa's third-party onboarding process at
+    https://ottawaonboarding.savagedata.com/ — a live Blazor Server application titled
+    "3rdPartyRegistration", operated by Savage Data Systems, reachable anonymously at
+    HTTP 200 but publishing no documentation, no endpoint list, no specification and no
+    credentials on its public shell. Second, test and certify the resulting solution with
+    the Green Button Alliance (https://www.greenbuttonalliance.org/testing), which Hydro
+    Ottawa says "ensures consistent, secure and standards-compliant implementation". Only
+    after both does an integrator receive connection details; nothing about the API is
+    published beforehand. There is no sandbox, no API key form, no trial, no pricing page
+    and no rate-limit document. Each authorized data pull additionally requires the
+    individual customer to complete Hydro Ottawa's Green Button authorization, initiated
+    from inside the third-party app. Human fallback for everything else is (613) 738-6400.
+  selfServeSignup: false
+  publicDeveloperPortal: false
+  developerPortalNote: >-
+    ottawaonboarding.savagedata.com is recorded as the developer portal because it is a
+    real, live, anonymously reachable, developer-facing surface — not a customer login —
+    and it is the only entry point Hydro Ottawa offers an integrator. It is not a
+    developer portal in the ordinary sense: no docs, no reference, no keys, no console.
+  portalEvidence:
+  - url: https://ottawaonboarding.savagedata.com/
+    httpStatus: 200
+    server: Microsoft-IIS/10.0
+    note: Live third-party registration application. HTML title "3rdPartyRegistration". Blazor Server.
+  - url: https://developer.hydroottawa.com/
+    dnsResolves: false
+    httpStatus: 000
+  - url: https://developers.hydroottawa.com/
+    dnsResolves: false
+    httpStatus: 000
+  - url: https://developersdev.hydroottawa.com/
+    dnsResolves: true
+    dnsChain: 104.18.21.108 / 104.18.20.108 (Cloudflare)
+    httpStatus: 530
+    note: >-
+      A non-production developer-portal hostname is present in certificate transparency
+      logs and resolves through Cloudflare, but the origin is unreachable (HTTP 530). The
+      matching production hostname does not exist. Read as: a developer portal was at some
+      point stood up in a dev environment and never shipped. NOT counted as a portal.
+  - url: https://api.hydroottawa.com/
+    dnsResolves: true
+    httpStatus: 403
+    server: cloudflare
+    note: >-
+      A production API hostname exists (and a *.api.hydroottawa.com wildcard certificate is
+      in CT logs) but returns HTTP 403 at root and HTTP 404 for /v1, /api, /swagger,
+      /swagger.json, /openapi.json, /api-docs, /health, /.well-known/openid-configuration,
+      /DataCustodian and /espi. Internal or partner infrastructure, not a public programme.
+  - url: https://docs.hydroottawa.com/
+    dnsResolves: false
+    httpStatus: 000
+  - url: https://data.hydroottawa.com/
+    dnsResolves: false
+    httpStatus: 000
+  - url: https://gb.hydroottawa.com/
+    dnsResolves: false
+    httpStatus: 000
+    note: Present in certificate transparency logs (as is gbdev.hydroottawa.com) but does not resolve publicly.
+
+authModel:
+  consumerData: >-
+    OAuth 2.0 authorization code, per the ESPI/Green Button model — the customer is
+    redirected from the third-party application into Hydro Ottawa's Green Button
+    authentication, selects data types, duration and frequency, and can revoke later. This
+    is the standard's model and is consistent with Hydro Ottawa's description of its own
+    flow; the concrete authorization and token endpoints are NOT published and were NOT
+    observed, so none are recorded. The harvested GBA specification carries an oauth2
+    scheme with authorizationCode and clientCredentials flows and an EMPTY scopes object —
+    no scope names were invented.
+  downloadMyData: >-
+    Customer credential only. MyAccount username and password, or bill-derived
+    verification: 20-digit account number plus total kWh consumption plus bill due date.
+  outageFeed: >-
+    None. Anonymous HTTP GET against kubra.io. No key, no header, no referer check.
+  openidConfiguration:
+    probed:
+    - url: https://hydroottawa.com/.well-known/openid-configuration
+      httpStatus: 404
+    - url: https://www.hydroottawa.com/.well-known/openid-configuration
+      httpStatus: 404
+    - url: https://api.hydroottawa.com/.well-known/openid-configuration
+      httpStatus: 404
+    - url: https://hydroottawa.savagedata.com/.well-known/openid-configuration
+      httpStatus: 200
+      note: >-
+        DISCOUNTED. The 200 is the Blazor SPA shell, byte-identical to the response for the
+        invented control path /this-path-should-not-exist-12345. Not a discovery document.
+    result: >-
+      No anonymously served OpenID Connect discovery document exists on any Hydro Ottawa
+      or Savage Data host.
+
+probes:
+  date: '2026-07-27'
+  method: >-
+    curl, anonymous, following redirects, browser User-Agent, plus dig for resolution and
+    crt.sh certificate transparency for hostname enumeration. Every 200 on the vendor SPA
+    was control-tested against an invented path before being trusted.
+  results:
+  - url: https://hydroottawa.com/
+    httpStatus: 200
+    note: Drupal. Corporate site.
+  - url: https://www.hydroottawa.com/
+    httpStatus: 200
+  - url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+    httpStatus: 200
+    note: Primary Green Button page. Describes DMD and CMD, formats, intervals, 24-month window.
+  - url: https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+    httpStatus: 200
+    note: Third-party developer requirements. Links only to the onboarding app and GBA testing.
+  - url: https://hydroottawa.com/en/accounts-services/services/request-additional-electricity-meter-data
+    httpStatus: 200
+    note: Human form for meter data beyond 24 months.
+  - url: https://hydroottawa.com/en/faq
+    httpStatus: 200
+  - url: https://hydroottawa.com/developers
+    httpStatus: 404
+  - url: https://hydroottawa.com/developer
+    httpStatus: 404
+  - url: https://hydroottawa.com/api
+    httpStatus: 404
+  - url: https://hydroottawa.com/docs
+    httpStatus: 404
+  - url: https://hydroottawa.com/data
+    httpStatus: 404
+  - url: https://hydroottawa.com/open-data
+    httpStatus: 404
+  - url: https://hydroottawa.com/openapi.json
+    httpStatus: 404
+  - url: https://hydroottawa.com/swagger.json
+    httpStatus: 404
+  - url: https://hydroottawa.com/api-docs
+    httpStatus: 404
+  - url: https://hydroottawa.com/.well-known/security.txt
+    httpStatus: 404
+  - url: https://www.hydroottawa.com/robots.txt
+    httpStatus: 200
+    note: Stock Drupal robots.txt. No API or data paths referenced.
+  - url: https://www.hydroottawa.com/sitemap.xml
+    httpStatus: 404
+  - url: https://hydroottawa.savagedata.com/
+    httpStatus: 200
+    note: Redirects to /Connect/Authorize. Microsoft-IIS/10.0. Blazor Server, bundle LDCAuthGPFrontEnd, Ottawa-branded CSS.
+  - url: https://hydroottawa.savagedata.com/Connect/Authorize
+    httpStatus: 200
+    note: Customer Green Button authorization / download portal. Login required beyond this shell.
+  - url: https://hydroottawa.savagedata.com/this-path-should-not-exist-12345
+    httpStatus: 200
+    note: >-
+      CONTROL PROBE. Returns the same HTML shell as every other path on this host. This is
+      why no 200 on this host is treated as an endpoint.
+  - url: https://ottawaonboarding.savagedata.com/
+    httpStatus: 200
+    note: Third-party developer registration application. Blazor Server, title "3rdPartyRegistration".
+  - url: https://www.savagedata.com/
+    httpStatus: 200
+    note: >-
+      Vendor. Savage Data Systems, 19 Legault St, North Bay, Ontario. Founded 1980,
+      pivoted to electricity in the late 1990s, states relationships with over 40 Local
+      Distribution Companies and retailers. info@savagedata.com, 705-495-6359.
+  - url: https://api.hydroottawa.com/
+    httpStatus: 403
+  - url: https://developersdev.hydroottawa.com/
+    httpStatus: 530
+  - url: https://gridflex.hydroottawa.com/
+    httpStatus: 200
+    note: FlexSaver demand-flexibility consumer programme page. No API, no protocol reference.
+  - url: https://connect.hydroottawa.com/
+    httpStatus: 404
+  - url: https://outages.hydroottawa.com/
+    httpStatus: 200
+  - url: https://github.com/hydroottawa
+    httpStatus: 200
+    note: >-
+      Organization created 2015-05-08, public_repos 0. An empty presence — no SDKs, no
+      specs, no sample code, nothing.
+  - url: https://open.ottawa.ca/api/feed/dcat-us/1.1.json
+    httpStatus: 200
+    note: 682 City of Ottawa datasets; no Hydro Ottawa dataset among them.
+  - url: https://greenbuttonontario.ca/
+    httpStatus: 200
+    note: >-
+      Informational portal about O. Reg. 633/21 and "50+ Utilities". No utility list, no
+      third-party directory, no technical documentation, no ESPI version. Points at a
+      commercial connector product, ezgb.ca.
+  - url: https://www.greenbuttonalliance.org/testing
+    httpStatus: 200
+    note: The certification path Hydro Ottawa requires of third parties.
+  - url: https://www.greenbuttonalliance.org/certified
+    httpStatus: 404
+  - url: https://www.greenbuttonalliance.org/certified-products
+    httpStatus: 404
+  - url: https://www.greenbuttonalliance.org/certifications
+    httpStatus: 404
+  - url: https://www.greenbuttonalliance.org/certified-utilities
+    httpStatus: 404
+    note: >-
+      No public GBA certified-products register could be located at any obvious path. This
+      is why Hydro Ottawa's certification is recorded as claimed rather than verified.
+  - url: https://www.ontario.ca/laws/regulation/210633
+    httpStatus: 200
+    note: Ontario e-Laws, O. Reg. 633/21.
+  - url: https://raw.githubusercontent.com/GreenButtonAlliance/OpenAPI-Green-Button-Documentation/main/green-button-openapi.yaml
+    httpStatus: 200
+    note: Harvested to openapi/hydro-ottawa-green-button-espi-openapi.yml. Parses.
+
+findings:
+  summary: >-
+    Hydro Ottawa is the Ontario answer to the question this study asks, and the answer is
+    that a mandate can produce a real implementation and still produce nothing a developer
+    can act on. Ontario did the hard thing: it wrote a regulation, named a specific
+    standard and version, set a deadline and required third-party certification. Hydro
+    Ottawa complied — it stood up a customer Green Button authorization portal and a
+    dedicated third-party registration application, both live, both branded, both running
+    today on a specialist Ontario vendor's platform. And yet from outside the utility there
+    is no base URI, no endpoint, no specification, no scope list, no discovery document, no
+    register entry and no public certificate. The regulation obligated the capability
+    without obligating its publication, so the only way to learn how the API works is to
+    apply. That is the exact inverse of the Australian CDR, where an anonymous call to the
+    ACCC register proves designation and an anonymous call to /discovery/status proves
+    conformance. Same idea, two continents, opposite transparency outcomes — and it is
+    Ontario, the jurisdiction with the tighter standard-specific rule, that is the harder
+    one to verify.
+  mandateIsNotImplementation: >-
+    Held apart deliberately. The obligation is recorded from the regulation and the OEB
+    guidance. The operating surfaces are recorded from two live HTTP 200 applications. The
+    conformance claim is recorded as a claim, because no conformant response was obtained
+    and none could be requested. Every 200 returned by the vendor's SPA was control-tested
+    against an invented path and discarded. Status is live-claimed-unverified, not
+    live-implemented, and that is the finding rather than a shortfall in the research.
+  consumerVersusMarket: >-
+    The split is total and it runs the opposite way to most of this sector. Consumer data:
+    mandated, built, free, consent-scoped, revocable — and undocumented and gated behind an
+    application plus a certification. Market data: nothing at all, by structure — in
+    Ontario the market layer belongs to the IESO, and a distributor has none to publish.
+    Hydro Ottawa does not even publish generation data for Portage Power's 131 MW of
+    municipally-owned renewables, nor a single dataset on the open data portal of the City
+    that owns it. The one open machine-readable feed in the whole estate — live outage
+    counts, 379,291 customers served — belongs to KUBRA, is undocumented, and was found by
+    reading a JavaScript bootstrap config.
+  vendorConcentration: >-
+    The mandated API is not built by the utility. Savage Data Systems of North Bay, Ontario
+    operates both the customer authorization portal and the third-party registration portal,
+    and states it serves over 40 Ontario LDCs and retailers. The province mandated sixty
+    utilities to implement one standard; a small number of vendors implemented it sixty
+    times. Whether Ontario has sixty Green Button implementations or four vendor platforms
+    wearing sixty logos is the question the regulation's aggregate certification count —
+    "55 utilities' platforms" — quietly answers.
+  contrastWithAustralia: >-
+    CDR energy gives a public register, a published base URI per brand, unauthenticated
+    discovery endpoints, a versioned standards-body OpenAPI, and centrally hosted open
+    product reference data. Ontario's Green Button gives a certified private
+    implementation, a login page, a registration form and a phone number. Both are genuine
+    mandates. Only one is auditable from the outside.
+  corporateContext: >-
+    Hydro Ottawa Holding Inc. is 100 percent owned by the City of Ottawa. Hydro Ottawa
+    Limited distributes electricity to roughly 372,000 customers in Ottawa and Casselman
+    (the outage feed reports 379,291 customers served as of the probe date). Sister
+    companies are Portage Power (Ontario's largest municipally-owned renewable generator,
+    131 MW, run-of-river hydro at Chaudière Falls and plants in Ontario, Quebec and New
+    York, plus 16 solar installations), Envari (energy solutions) and Hiboo Networks
+    (fibre). None of them publishes an API.
+
+sources:
+- url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  type: Documentation
+  httpStatus: 200
+  note: Primary first-party description of Green Button DMD and CMD.
+- url: https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+  type: Documentation
+  httpStatus: 200
+  note: Primary first-party statement of what a third-party developer must do.
+- url: https://ottawaonboarding.savagedata.com/
+  type: Registration
+  httpStatus: 200
+  note: Live third-party onboarding application. The only developer entry point.
+- url: https://hydroottawa.savagedata.com/Connect/Authorize
+  type: Authentication
+  httpStatus: 200
+  note: Live customer Green Button authorization portal.
+- url: https://www.canlii.org/en/on/laws/regu/o-reg-633-21/latest/o-reg-633-21.html
+  type: Regulation
+  note: O. Reg. 633/21, Energy Data, under the Electricity Act, 1998.
+- url: https://www.ontario.ca/laws/regulation/210633
+  type: Regulation
+  httpStatus: 200
+  note: Ontario e-Laws copy of the same regulation.
+- url: https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
+  type: Documentation
+  note: Ontario Energy Board staff guidance for implementing Green Button.
+- url: https://www.greenbuttonalliance.org/news/green-button-alliance-announces-55-ontario-based-utilities-platforms-are-now-green-button-certified
+  type: PressRelease
+  note: >-
+    2 November 2023. 55 Ontario utility platforms certified to NAESB REQ.21 ESPI v3.3.
+    Aggregate only — Hydro Ottawa is not named.
+- url: https://www.greenbuttonalliance.org/testing
+  type: Certification
+  httpStatus: 200
+  note: The GBA certification programme Hydro Ottawa requires of third parties.
+- url: https://raw.githubusercontent.com/GreenButtonAlliance/OpenAPI-Green-Button-Documentation/main/green-button-openapi.yaml
+  type: OpenAPI
+  httpStatus: 200
+  note: Harvested to openapi/hydro-ottawa-green-button-espi-openapi.yml. GBA-authored, ESPI 4.0, sandbox servers.
+- url: https://www.savagedata.com/
+  type: Vendor
+  httpStatus: 200
+  note: Savage Data Systems — operator of both Hydro Ottawa Green Button portals.
+- url: https://hydroottawagroup.com/
+  type: Website
+  httpStatus: 200
+  note: Corporate group identity — Hydro Ottawa Limited, Portage Power, Envari, Hiboo Networks.
+- url: https://open.ottawa.ca/api/feed/dcat-us/1.1.json
+  type: OpenData
+  httpStatus: 200
+  note: City of Ottawa open data catalogue — 682 datasets, none from its own utility.
+
+actions:
+  apisYmlCreated: true
+  apisListed: 1
+  openapiHarvested: 1
+  fabricationCheck: >-
+    No host, endpoint, scope, version or specification was invented. No baseURL is recorded
+    for the CMD API because Hydro Ottawa publishes none. No ESPI endpoint path is attributed
+    to Hydro Ottawa. No OAuth scope names are listed anywhere in this profile, because the
+    only machine-readable source found carries an empty scopes object. Every 200 on the
+    Savage Data host was control-tested against an invented path and discarded as SPA
+    catch-all behaviour. The KUBRA outage feed is real and was called, but is excluded from
+    apis.yml apis[] because it is undocumented and is not published by Hydro Ottawa. Green
+    Button Download My Data is real and documented but is excluded from apis[] because it is
+    a login-gated file download, not an API; it is fully described in this file instead.
