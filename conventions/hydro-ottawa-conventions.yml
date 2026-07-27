@@ -1,0 +1,140 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  openapi/hydro-ottawa-green-button-espi-openapi.yml, plus Hydro Ottawa's own Green Button
+  and third-party registration pages
+provenance_note: >-
+  Hydro Ottawa documents no request/response conventions of its own — no reference, no
+  header table, no pagination note, no rate-limit document. Everything derived below comes
+  from the Green Button Alliance ESPI specification harvested into this repo, which is the
+  family contract Hydro Ottawa's mandated surface belongs to, NOT a Hydro Ottawa document.
+  Treat it as the shape to expect, not as a published Hydro Ottawa commitment.
+authentication:
+  style: oauth2
+  flows: [authorizationCode, clientCredentials]
+  consent_model: >-
+    Customer-granted and revocable. Hydro Ottawa states the authorization must be initiated
+    from inside the third-party application, which redirects the customer into Hydro
+    Ottawa's Green Button authentication; the customer selects the data types, the duration
+    and the frequency and may revoke at any time from account settings. Personally
+    identifiable information is transmitted separately from usage data.
+  token_endpoint_published: false
+  authorization_endpoint_published: false
+  endpoints_note: >-
+    The endpoints in the harvested spec belong to the Green Button Alliance sandbox. Hydro
+    Ottawa's own authorization and token endpoints are not published anywhere and were not
+    observed. The customer-facing half of the flow is visible at
+    https://hydroottawa.savagedata.com/Connect/Authorize.
+  detail: authentication/hydro-ottawa-authentication.yml
+  scopes: scopes/hydro-ottawa-scopes.yml
+  scopes_note: The spec's scopes object is empty and Hydro Ottawa publishes no scope reference.
+media_types:
+  request: null
+  response: application/atom+xml
+  note: >-
+    ESPI is Atom-wrapped XML, not JSON. Responses are AtomFeed documents whose entries
+    carry the ESPI payload under the http://naesb.org/espi namespace. Clients built for
+    JSON APIs need an XML/Atom path.
+pagination:
+  style: atom-index
+  supported: true
+  params:
+  - name: start-index
+    in: query
+    type: integer
+    note: Index of the first result, 1-indexed
+  - name: max-results
+    in: query
+    type: integer
+    note: Maximum number of results to return
+  response_fields:
+  - AtomFeed entries
+  - AtomLink rel values
+  note: Applied to every collection operation in the specification.
+filtering:
+  supported: true
+  params:
+  - name: published-min
+    in: query
+    note: Minimum publication date, RFC 3339 instant
+  - name: published-max
+    in: query
+    note: Maximum publication date, RFC 3339 instant
+  - name: updated-min
+    in: query
+    note: Minimum update date, RFC 3339 instant
+  - name: updated-max
+    in: query
+    note: Maximum update date, RFC 3339 instant
+field_expansion:
+  supported: true
+  mechanism: depth
+  note: >-
+    A `depth` query parameter controls response depth on every operation. The spec
+    documents it only as "Response depth control" and gives no value range; nothing was
+    invented here.
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+  note: No customer-defined metadata surface. ESPI resources are utility-owned records.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No Idempotency-Key header or parameter is declared anywhere in the specification and
+    none is documented by Hydro Ottawa. Every operation in the contract is a GET, so the
+    read surface is naturally idempotent, but there is no idempotency-key contract for
+    writes. No `Idempotency` pointer is wired in apis.yml — emitting one would claim a
+    guarantee this provider has not made.
+request_tracing:
+  request_id_header: null
+  supported: false
+  note: No correlation or request-id header is documented.
+versioning:
+  style: uri-path
+  evidence: paths carry the /espi/1_1/resource/ segment
+  detail: lifecycle/hydro-ottawa-lifecycle.yml
+error_envelope:
+  format: none
+  note: >-
+    400 and 403 are declared with a description only — no schema, no content object, no
+    application/problem+json. See errors/hydro-ottawa-problem-types.yml.
+  detail: errors/hydro-ottawa-problem-types.yml
+async_and_bulk:
+  supported: true
+  note: >-
+    202 Accepted is declared on every operation and is load-bearing on downloadBulkData
+    (/espi/1_1/resource/Batch/Bulk/{bulkId}), where bulk transfer is asynchronous. A client
+    must treat 202 as a normal outcome and poll rather than fail.
+rate_limiting:
+  documented: false
+  headers: []
+  note: >-
+    No rate limits, quotas, throttling behaviour or retry guidance are published by Hydro
+    Ottawa or declared in the specification. Absence of documentation is not absence of
+    limits — a real integrator would learn them only after onboarding.
+data_window:
+  interval: 15-minute, hourly or daily, at the smart meter's own interval
+  history: >-
+    Up to 24 months through the Green Button surfaces; the regulation requires intervals of
+    one hour or less and at least 24 months of availability. Older data goes through a human
+    form at
+    https://hydroottawa.com/en/accounts-services/services/request-additional-electricity-meter-data.
+access_gate:
+  gate: application-approval
+  steps:
+  - Complete Hydro Ottawa third-party onboarding at https://ottawaonboarding.savagedata.com/
+  - Test and certify the solution with the Green Button Alliance at https://www.greenbuttonalliance.org/testing
+  - Obtain per-customer authorization, initiated from inside the third-party application
+  note: >-
+    Connection details are issued only after onboarding and certification. There is no
+    self-serve signup, no sandbox, no API key form, no trial and no pricing page. Cost of
+    the Green Button services themselves is stated by Hydro Ottawa as free of charge.
+cross_links:
+  authentication: authentication/hydro-ottawa-authentication.yml
+  scopes: scopes/hydro-ottawa-scopes.yml
+  errors: errors/hydro-ottawa-problem-types.yml
+  lifecycle: lifecycle/hydro-ottawa-lifecycle.yml
+  conformance: conformance/hydro-ottawa-conformance.yml
+  data_model: data-model/hydro-ottawa-data-model.yml

@@ -1,0 +1,102 @@
+generated: '2026-07-27'
+method: searched
+source: anonymous HTTP probes with a browser User-Agent, following redirects
+summary: >-
+  No /.well-known/ discovery document is served anonymously on any Hydro Ottawa host
+  or on either of the Savage Data Systems hosts that operate Hydro Ottawa's Green
+  Button surfaces. Every 200 recorded below on a *.savagedata.com host is the Blazor
+  Server SPA shell, not a document: each was control-tested against the invented path
+  /this-path-should-not-exist-12345, which returns the same HTML with the same
+  content-type and a byte length within five bytes. Those 200s are recorded as
+  discounted: true and are NOT evidence of a discovery surface. No security.txt exists
+  anywhere, so no SecurityTxt pointer is wired.
+control_probe:
+  method: >-
+    Each *.savagedata.com response was compared against the response for an invented
+    path on the same host before being trusted.
+  results:
+  - url: https://ottawaonboarding.savagedata.com/this-path-should-not-exist-12345
+    status: 200
+    content_type: text/html; charset=utf-8
+    bytes: 1862
+  - url: https://hydroottawa.savagedata.com/this-path-should-not-exist-12345
+    status: 200
+    note: documented in review.yml probes; byte-identical SPA shell
+hosts:
+- host: https://hydroottawa.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://www.hydroottawa.com
+  documents:
+  - path: /llms.txt
+    status: 404
+  - path: /robots.txt
+    status: 200
+    note: stock Drupal robots.txt; no API or data paths referenced (see review.yml)
+- host: https://api.hydroottawa.com
+  note: production API hostname resolves but returns 403 at root and 404 on every path probed
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /openapi.json
+    status: 404
+- host: https://hydroottawa.savagedata.com
+  note: >-
+    Customer Green Button authorization portal (Blazor Server, bundle LDCAuthGPFrontEnd).
+    Catch-all SPA — every path returns 200 with the same shell.
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    discounted: true
+    reason: SPA shell (text/html, 13949 bytes) matching the control probe, not a document
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    discounted: true
+    reason: SPA shell (text/html, 13944 bytes) matching the control probe, not a document
+  - path: /.well-known/openid-configuration
+    status: 200
+    discounted: true
+    reason: SPA shell; recorded and discounted in review.yml on the same basis
+- host: https://ottawaonboarding.savagedata.com
+  note: Third-party developer registration application (Blazor Server, title "3rdPartyRegistration")
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 200
+    discounted: true
+    reason: SPA shell (text/html, 1857 bytes) vs control probe 1862 bytes on the same host
+- host: https://sandbox.greenbuttonalliance.org:8443
+  note: >-
+    servers[] host of the harvested Green Button Alliance OpenAPI. Not a Hydro Ottawa
+    host — recorded because it is the only server declared in a spec in this repo.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /DataCustodian/espi/1_1/resource/ApplicationInformation
+    status: 403
+    note: the GBA sandbox resource surface answers, but requires authorization
+findings:
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false
+  llms_txt: false

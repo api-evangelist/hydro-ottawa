@@ -1,0 +1,147 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  openapi/hydro-ottawa-green-button-espi-openapi.yml, apis.yml, review.yml, and the
+  Hydro Ottawa Green Button pages
+scope_note: >-
+  Two different things are asserted below and they must not be conflated. Standards
+  marked scope: mandate are what Ontario Regulation 633/21 compels Hydro Ottawa to do —
+  compelled, claimed by Hydro Ottawa, and NOT independently verifiable from outside,
+  because no base URI, no reference, no scope list and no anonymously served discovery
+  document exists and the Green Button Alliance publishes no public certified-products
+  register. Standards marked scope: spec are derived from the harvested Green Button
+  Alliance OpenAPI in this repo, which is the family contract and NOT Hydro Ottawa's own
+  document. Nothing here is recorded as verified against a live Hydro Ottawa response,
+  because no such response could be obtained.
+standards:
+- id: naesb-req21-espi-3.3
+  name: NAESB REQ.21 Energy Services Provider Interface (Green Button) v3.3
+  scope: mandate
+  conforms: claimed-unverified
+  evidence: >-
+    Compelled by Ontario Regulation 633/21 (Energy Data) under the Electricity Act, 1998
+    for covered Ontario distributors by 1 November 2023. Hydro Ottawa Limited is a
+    licensed distributor with full smart metering and roughly 372,000 customers and no
+    small-entity exemption applies. Hydro Ottawa names Green Button and the Green Button
+    Alliance on its own pages but never names an ESPI version.
+  verification_gap: >-
+    No ESPI base URI, no API reference, no scope list, no first-party specification and no
+    conformant response were obtained. Recorded as claimed, not conformant.
+- id: green-button-connect-my-data
+  name: Green Button Connect My Data
+  scope: mandate
+  conforms: claimed-unverified
+  evidence: >-
+    Hydro Ottawa publishes a Green Button page describing CMD and a third-party
+    registration page, and operates two live surfaces: a customer authorization portal at
+    https://hydroottawa.savagedata.com/Connect/Authorize (HTTP 200) and a third-party
+    registration application at https://ottawaonboarding.savagedata.com/ (HTTP 200), both
+    Savage Data Systems Blazor applications confirmed on 2026-07-27.
+- id: green-button-download-my-data
+  name: Green Button Download My Data
+  scope: mandate
+  conforms: true
+  evidence: >-
+    Live and separately documented — up to 24 months of usage and billing data as Green
+    Button XML (also Excel and PDF) from the Green Button portal or MyAccount. It is a
+    credentialed file download, not a programmatic API, which is why it is not listed in
+    apis.yml apis[].
+- id: green-button-alliance-certification
+  name: Green Button Alliance certification
+  scope: mandate
+  conforms: claimed-unverified
+  evidence: >-
+    The GBA announced on 2 November 2023 that it had tested and certified 55 Ontario
+    utility platforms to ESPI v3.3. That announcement is an aggregate count and does not
+    name Hydro Ottawa. No public GBA certified-products register was found —
+    /certified, /certifications, /certified-products and /certified-utilities all
+    return HTTP 404.
+- id: oauth2
+  name: OAuth 2.0
+  scope: spec
+  conforms: true
+  evidence: >-
+    The harvested spec declares a single oauth2 securityScheme with authorizationCode and
+    clientCredentials flows. Hydro Ottawa's own description of the CMD flow — the third
+    party initiates, the customer is redirected into Hydro Ottawa's Green Button
+    authentication, selects data types, duration and frequency, and may revoke — is the
+    authorization-code model. Concrete authorization and token endpoints for Hydro Ottawa
+    are not published and were not observed.
+- id: oauth2-scopes-published
+  name: Published OAuth scope reference
+  scope: spec
+  conforms: false
+  evidence: The scopes object in the source document is empty; Hydro Ottawa publishes no scope reference.
+- id: oidc-discovery
+  name: OpenID Connect Discovery (RFC 8414 / openid-configuration)
+  scope: mandate
+  conforms: false
+  evidence: >-
+    No anonymously served discovery document exists on any Hydro Ottawa or Savage Data
+    host. See well-known/hydro-ottawa-well-known.yml — the savagedata.com 200s are SPA
+    shells, control-tested against an invented path.
+- id: atom-rfc4287
+  name: Atom Syndication Format (RFC 4287)
+  scope: spec
+  conforms: true
+  evidence: >-
+    Every 200 and 202 response in the spec is application/atom+xml, and the components
+    carry AtomFeed, AtomEntry, AtomContent and AtomLink schemas. ESPI is an Atom-wrapped
+    XML contract, not JSON.
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details for HTTP APIs
+  scope: spec
+  conforms: false
+  evidence: 400 and 403 responses carry a description only, with no content object and no problem+json media type.
+- id: rfc3339-timestamps
+  name: RFC 3339 timestamps
+  scope: spec
+  conforms: true
+  evidence: >-
+    published-min, published-max, updated-min and updated-max query parameters are
+    documented as RFC 3339 instants.
+- id: pagination
+  name: Documented pagination
+  scope: spec
+  conforms: true
+  evidence: start-index (1-indexed) and max-results query parameters on every collection operation.
+- id: idempotency
+  name: Idempotency keys
+  scope: spec
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or parameter is declared, and none is documented. Every
+    operation in the spec is a GET, so the question is largely moot for the read surface.
+- id: rate-limit-headers
+  name: Documented rate limiting
+  scope: mandate
+  conforms: false
+  evidence: No rate-limit document, header convention or quota is published by Hydro Ottawa.
+- id: openadr
+  name: OpenADR
+  conforms: false
+  evidence: No reference found on any Hydro Ottawa surface. The FlexSaver demand-flexibility page names no protocol.
+- id: ieee-2030.5
+  name: IEEE 2030.5 (Smart Energy Profile 2.0)
+  conforms: false
+  evidence: No reference found.
+- id: iec-cim-61968
+  name: IEC CIM 61968 / 61970
+  conforms: false
+  evidence: No reference found.
+- id: ocpp-ocpi
+  name: OCPP / OCPI
+  conforms: false
+  evidence: >-
+    No reference found. hydroottawa.com/en/ev-charging and /en/electric-vehicle both
+    return HTTP 404.
+- id: cdr-consumer-data-right
+  name: Consumer Data Right (CDS) energy standards
+  conforms: false
+  evidence: Not applicable — Canada has no consumer data right in energy. Ontario legislated Green Button instead.
+compliance_program_published: false
+compliance_note: >-
+  No Compliance pointer is wired in apis.yml. Hydro Ottawa publishes no trust centre, no
+  named certification (SOC 2, ISO 27001, PCI DSS) and no compliance page; the
+  probe-security-programs pass returned vdp=none trust=none. Its only compliance claim is
+  the regulatory one above, which is recorded as claimed-unverified rather than published.

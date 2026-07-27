@@ -1,0 +1,18 @@
+generated: '2026-07-27'
+method: generated
+source: openapi/hydro-ottawa-green-button-espi-openapi.yml
+note: >-
+  Every operationId referenced below was verified verbatim against the specification in
+  this repo. The specification is authored by the Green Button Alliance, not by Hydro
+  Ottawa — the skills say so explicitly and instruct an agent never to guess a Hydro Ottawa
+  base URI, because none is published. Hydro Ottawa publishes no skills, AGENTS.md or agent
+  guidance of its own.
+skills:
+- file: hydro-ottawa-green-button-onboarding.md
+  name: Onboard as a Hydro Ottawa Green Button third party
+  api: openapi/hydro-ottawa-green-button-espi-openapi.yml
+  operations: [findApplicationInformations, getApplicationInformation]
+- file: hydro-ottawa-green-button-retrieve-usage.md
+  name: Retrieve a customer's Green Button usage data from Hydro Ottawa
+  api: openapi/hydro-ottawa-green-button-espi-openapi.yml
+  operations: [findAuthorizations, getAuthorization, findUsagePoints, getUsagePoint, downloadBulkData]

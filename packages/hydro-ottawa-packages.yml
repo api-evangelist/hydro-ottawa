@@ -1,0 +1,81 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  npm registry search, PyPI JSON API, RubyGems API, Maven Central, GitHub org
+  listings (github.com/hydroottawa and github.com/GreenButtonAlliance)
+summary: >-
+  Hydro Ottawa publishes NO first-party client libraries in any public package
+  registry, and its GitHub organization (github.com/hydroottawa, created 2015)
+  returns an empty repository list from the GitHub API. That is consistent with the
+  rest of its posture: a mandated Green Button Connect My Data surface whose base
+  URI, reference and credentials are all handed out only after a private onboarding
+  process. No `SDKs` pointer is wired in apis.yml because there is no first-party SDK
+  to point at.
+packages: []
+first_party_found: false
+searched_registries:
+- registry: npm
+  query: hydro ottawa / green button espi
+  first_party_hits: 0
+- registry: pypi
+  query: hydro-ottawa, greenbutton, greenbutton-python
+  first_party_hits: 0
+  note: both greenbutton and greenbutton-python return HTTP 404 on the PyPI JSON API
+- registry: rubygems
+  query: greenbutton
+  first_party_hits: 0
+- registry: maven-central
+  query: espi
+  first_party_hits: 0
+- registry: nuget
+  first_party_hits: 0
+- registry: pkg.go.dev
+  first_party_hits: 0
+- registry: packagist
+  first_party_hits: 0
+- registry: crates.io
+  first_party_hits: 0
+- registry: github
+  query: github.com/hydroottawa
+  first_party_hits: 0
+  note: organization exists since 2015; GitHub API /orgs/hydroottawa/repos returns an empty array
+ecosystem:
+  note: >-
+    These are NOT Hydro Ottawa libraries and are recorded as ecosystem context only.
+    They implement the NAESB REQ.21 ESPI / Green Button family that Hydro Ottawa's
+    mandated Connect My Data surface belongs to. official is false for every entry
+    because none of them is published by Hydro Ottawa. A developer integrating with
+    Hydro Ottawa would still need connection details Hydro Ottawa does not publish.
+  libraries:
+  - language: java
+    name: OpenESPI-Common-java
+    publisher: Green Button Alliance
+    url: https://github.com/GreenButtonAlliance/OpenESPI-Common-java
+    description: Common library for Green Button Third Party and Data Custodian OpenESPI applications
+    official: false
+  - language: java
+    name: OpenESPI-ThirdParty-java
+    publisher: Green Button Alliance
+    url: https://github.com/GreenButtonAlliance/OpenESPI-ThirdParty-java
+    description: Spring Framework implementation of a Green Button Third Party OpenESPI application
+    official: false
+  - language: java
+    name: OpenESPI-DataCustodian-java
+    publisher: Green Button Alliance
+    url: https://github.com/GreenButtonAlliance/OpenESPI-DataCustodian-java
+    description: Spring Framework implementation of a Green Button Data Custodian OpenESPI application
+    official: false
+  - language: ruby
+    name: OpenESPI-ThirdParty-ruby
+    publisher: Green Button Alliance
+    url: https://github.com/GreenButtonAlliance/OpenESPI-ThirdParty-ruby
+    description: A Third Party library for Ruby programmers
+    official: false
+  - language: ruby
+    registry: rubygems
+    name: greenbutton
+    url: https://rubygems.org/gems/greenbutton
+    install: gem install greenbutton
+    description: Parser that creates a Ruby object from a Green Button data file
+    publisher: third-party (cew821)
+    official: false

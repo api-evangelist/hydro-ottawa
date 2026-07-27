@@ -1,0 +1,76 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  Hydro Ottawa Green Button pages, the outage map, review.yml probe record, and
+  openapi/hydro-ottawa-green-button-espi-openapi.yml
+summary: >-
+  Hydro Ottawa publishes no API lifecycle policy of any kind — no versioning statement,
+  no deprecation policy, no Sunset/Deprecation header commitment, no SLA and no API
+  status page. The only status surface it operates is a customer-facing outage map, which
+  reports the electricity distribution network, not API availability. Versioning for the
+  Green Button surface is set externally by the standard and by the Ontario regulation,
+  not by Hydro Ottawa.
+versioning:
+  scheme: standard-versioned
+  governed_by: >-
+    NAESB REQ.21 ESPI Model Business Practices, versioned by the North American Energy
+    Standards Board; the binding version for Ontario is fixed by O. Reg. 633/21.
+  mandated_version: '3.3'
+  mandated_version_published: '2020-01-30'
+  implemented_version_verified: false
+  implemented_version_note: >-
+    Hydro Ottawa names Green Button and the Green Button Alliance on its pages but never
+    names an ESPI version. v3.3 is what the regulation compels, not what was observed.
+  spec_in_repo_version: >-
+    The harvested Green Button Alliance OpenAPI in this repo describes ESPI 4.0 and its
+    paths carry the /espi/1_1/resource/ URI segment. That is a version gap against the
+    Ontario mandate and is recorded on the artifact itself.
+  provider_version_policy: null
+  provider_version_policy_note: No Hydro Ottawa versioning policy exists on any page read.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset commitment and no notice period is published.
+    No Deprecation pointer is wired in apis.yml because there is nothing to point at.
+deprecated_operations: []
+deprecated_operations_note: No operation in the harvested specification is marked deprecated.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No API SLA is published. Hydro Ottawa's service obligations are set through the Ontario
+    Energy Board's distribution licence and scorecard, which govern the wires business, not
+    an API.
+status_page: https://outages.hydroottawa.com/
+status_page_scope: >-
+  Electricity distribution outages only — a KUBRA StormCenter deployment reporting
+  customers affected, outage counts and restoration. It is NOT an API status page: it says
+  nothing about the Green Button authorization portal, the onboarding application or the
+  ESPI resource surface. Recorded as the status page because it is the only operational
+  status surface Hydro Ottawa runs and it was confirmed HTTP 200 on 2026-07-27.
+api_status_page: null
+support:
+  faq: https://hydroottawa.com/en/faq
+  contact: https://hydroottawa.com/en/contact-us
+  phone: (613) 738-6400
+  note: >-
+    There is no developer support channel, no forum, no Slack/Discord and no
+    developer-facing ticketing. Integrator contact runs through the third-party onboarding
+    application and general customer service.
+changelog:
+  url: null
+  published: false
+  note: >-
+    No API changelog, release notes or version history exists. The corporate blog at
+    https://hydroottawa.com/en/about-us/blogs-articles (RSS at
+    https://hydroottawa.com/en/rss.xml) is customer communications, not API change
+    communication, so no ChangeLog pointer is wired.
+roadmap:
+  url: null
+  published: false
+  note: >-
+    No API roadmap. The only forward-looking commitment affecting the API surface is the
+    Ontario regulation itself.

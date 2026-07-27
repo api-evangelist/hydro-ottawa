@@ -101,6 +101,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hydro-ottawa-green-button-espi-openapi.yml
+  - type: Overlay
+    url: overlays/hydro-ottawa-green-button-espi-overlay.yaml
   - type: Documentation
     url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
   - type: Documentation
@@ -116,10 +118,48 @@ apis:
   - type: Documentation
     url: https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
 common:
+- type: DomainSecurity
+  url: security/hydro-ottawa-domain-security.yml
+- type: OAuthScopes
+  url: scopes/hydro-ottawa-scopes.yml
+- type: Authentication
+  url: authentication/hydro-ottawa-authentication.yml
+- type: Packages
+  url: packages/hydro-ottawa-packages.yml
+- type: WellKnown
+  url: well-known/hydro-ottawa-well-known.yml
+- type: LLMsTxt
+  url: llms/hydro-ottawa-llms.txt
+- type: Conformance
+  url: conformance/hydro-ottawa-conformance.yml
+- type: ErrorCatalog
+  url: errors/hydro-ottawa-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/hydro-ottawa-lifecycle.yml
+- type: Conventions
+  url: conventions/hydro-ottawa-conventions.yml
+- type: DataModel
+  url: data-model/hydro-ottawa-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
 - type: Website
   url: https://hydroottawa.com/
 - type: Website
   url: https://hydroottawagroup.com/
+- type: DeveloperPortal
+  url: https://ottawaonboarding.savagedata.com/
+- type: GettingStarted
+  url: https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+- type: SignUp
+  url: https://ottawaonboarding.savagedata.com/
+- type: Blog
+  url: https://hydroottawa.com/en/about-us/blogs-articles
+- type: BlogRSS
+  url: https://hydroottawa.com/en/rss.xml
+- type: TermsOfService
+  url: https://hydroottawa.com/en/about-us/policies-and-terms/terms-use
+- type: PrivacyPolicy
+  url: https://hydroottawa.com/en/about-us/policies-and-terms/privacy-notice
 - type: Documentation
   url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
 - type: Registration
