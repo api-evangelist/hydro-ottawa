@@ -65,48 +65,20 @@ description: >-
   utility with a mandated consumer data API it does not document, and no open market
   data at all.
 apis:
-- aid: hydro-ottawa:hydro-ottawa-green-button-connect-my-data-api
-  name: Hydro Ottawa Green Button Connect My Data (CMD) API
-  description: >-
-    Hydro Ottawa's mandated Green Button Connect My Data surface — the OAuth-authorized,
-    machine-to-machine channel through which a customer can grant a third-party
-    application ongoing access to their smart meter interval consumption and billing
-    data in NAESB REQ.21 ESPI XML. It exists because Ontario Regulation 633/21 (Energy
-    Data) under the Electricity Act, 1998 requires every covered Ontario electricity and
-    gas distributor to implement Green Button CMD and DMD to ESPI v3.3 and certify with
-    the Green Button Alliance. Hydro Ottawa's own Green Button page states the service is
-    free, that the customer selects the data types, duration and frequency and may revoke
-    at any time, that personally identifiable information is transmitted separately from
-    usage data, and that the authorization flow must be initiated from the third-party
-    application, which then redirects the customer into Hydro Ottawa's Green Button
-    authentication. The customer-facing half of that flow is live and was confirmed at
-    HTTP 200 on 2026-07-27 at https://hydroottawa.savagedata.com/Connect/Authorize, served
-    by Savage Data Systems on Microsoft-IIS. No base URL is recorded here because Hydro
-    Ottawa publishes no ESPI base URI, no API reference, no OpenID Connect discovery
-    document and no first-party specification — a developer receives connection details
-    only after completing onboarding. To integrate you must complete Hydro Ottawa's
-    third-party onboarding at https://ottawaonboarding.savagedata.com/ and test and certify
-    your solution with the Green Button Alliance. Conformance could not be independently
-    verified from outside; see review.yml.
+- aid: hydro-ottawa:hydro-ottawa-applicationinformation-api
+  name: Hydro Ottawa Application Information API
+  description: Application Information endpoints
   humanURL: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
   tags:
-  - Green Button
-  - Connect My Data
-  - ESPI
-  - Energy Usage
-  - Smart Metering
-  - Consumer Data
-  - Ontario
-  - Canada
+  - ApplicationInformation
   properties:
   - type: OpenAPI
-    url: openapi/hydro-ottawa-green-button-espi-openapi.yml
-  - type: Overlay
-    url: overlays/hydro-ottawa-green-button-espi-overlay.yaml
+    url: openapi/hydro-ottawa-applicationinformation-api-openapi.yml
   - type: Documentation
     url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
   - type: Documentation
-    url: https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+    url: >-
+      https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
   - type: Registration
     url: https://ottawaonboarding.savagedata.com/
   - type: Authentication
@@ -116,8 +88,86 @@ apis:
   - type: Documentation
     url: https://www.canlii.org/en/on/laws/regu/o-reg-633-21/latest/o-reg-633-21.html
   - type: Documentation
-    url: https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
+    url: >-
+      https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
+- aid: hydro-ottawa:hydro-ottawa-authorization-api
+  name: Hydro Ottawa Authorization API
+  description: Authorization endpoints
+  humanURL: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/hydro-ottawa-authorization-api-openapi.yml
+  - type: Documentation
+    url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  - type: Documentation
+    url: >-
+      https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+  - type: Registration
+    url: https://ottawaonboarding.savagedata.com/
+  - type: Authentication
+    url: https://hydroottawa.savagedata.com/Connect/Authorize
+  - type: Certification
+    url: https://www.greenbuttonalliance.org/testing
+  - type: Documentation
+    url: https://www.canlii.org/en/on/laws/regu/o-reg-633-21/latest/o-reg-633-21.html
+  - type: Documentation
+    url: >-
+      https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
+- aid: hydro-ottawa:hydro-ottawa-batch-api
+  name: Hydro Ottawa Batch API
+  description: Batch data transfer endpoints
+  humanURL: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  tags:
+  - Batch
+  properties:
+  - type: OpenAPI
+    url: openapi/hydro-ottawa-batch-api-openapi.yml
+  - type: Documentation
+    url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  - type: Documentation
+    url: >-
+      https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+  - type: Registration
+    url: https://ottawaonboarding.savagedata.com/
+  - type: Authentication
+    url: https://hydroottawa.savagedata.com/Connect/Authorize
+  - type: Certification
+    url: https://www.greenbuttonalliance.org/testing
+  - type: Documentation
+    url: https://www.canlii.org/en/on/laws/regu/o-reg-633-21/latest/o-reg-633-21.html
+  - type: Documentation
+    url: >-
+      https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
+- aid: hydro-ottawa:hydro-ottawa-usagepoint-api
+  name: Hydro Ottawa Usage Point API
+  description: Usage Point endpoints
+  humanURL: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  tags:
+  - UsagePoint
+  properties:
+  - type: OpenAPI
+    url: openapi/hydro-ottawa-usagepoint-api-openapi.yml
+  - type: Documentation
+    url: https://hydroottawa.com/en/residential/rates-billing/track-your-usage/green-button
+  - type: Documentation
+    url: >-
+      https://hydroottawa.com/en/accounts-services/services/green-button/green-button-and-third-party-registration
+  - type: Registration
+    url: https://ottawaonboarding.savagedata.com/
+  - type: Authentication
+    url: https://hydroottawa.savagedata.com/Connect/Authorize
+  - type: Certification
+    url: https://www.greenbuttonalliance.org/testing
+  - type: Documentation
+    url: https://www.canlii.org/en/on/laws/regu/o-reg-633-21/latest/o-reg-633-21.html
+  - type: Documentation
+    url: >-
+      https://www.oeb.ca/sites/default/files/OEB-Staff-Guidance-for-Implementation-of-Green-Button-20211101.pdf
 common:
+- type: Overlay
+  url: overlays/hydro-ottawa-green-button-espi-overlay.yaml
 - type: DomainSecurity
   url: security/hydro-ottawa-domain-security.yml
 - type: OAuthScopes
