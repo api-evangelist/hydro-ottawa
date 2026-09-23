@@ -1,0 +1,26 @@
+{
+  "provider": "hydro-ottawa",
+  "sources": [
+    "_original/hydro-ottawa-green-button-espi-openapi.yml"
+  ],
+  "outputs": [
+    "hydro-ottawa-applicationinformation-api-openapi.yml",
+    "hydro-ottawa-authorization-api-openapi.yml",
+    "hydro-ottawa-batch-api-openapi.yml",
+    "hydro-ottawa-usagepoint-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "hydro-ottawa-green-button-espi-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "hydro-ottawa-applicationinformation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hydro-ottawa-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hydro-ottawa-batch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hydro-ottawa-usagepoint-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
