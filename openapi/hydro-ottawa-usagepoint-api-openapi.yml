@@ -166,6 +166,16 @@ paths:
           description: Forbidden
 components:
   schemas:
+    AtomContent:
+      type: object
+      description: Atom content element containing ESPI resource (RFC 4287)
+      xml:
+        name: content
+        namespace: http://www.w3.org/2005/Atom
+      properties:
+        type:
+          type: string
+          description: Content media type (typically 'application/xml')
     AtomFeed:
       type: object
       description: Atom Feed (RFC 4287) containing ESPI resources
@@ -223,16 +233,6 @@ components:
           description: Entry links (minimum 2 required per Atom spec)
         content:
           $ref: '#/components/schemas/AtomContent'
-    AtomContent:
-      type: object
-      description: Atom content element containing ESPI resource (RFC 4287)
-      xml:
-        name: content
-        namespace: http://www.w3.org/2005/Atom
-      properties:
-        type:
-          type: string
-          description: Content media type (typically 'application/xml')
     AtomLink:
       type: object
       description: Atom link element (RFC 4287)
